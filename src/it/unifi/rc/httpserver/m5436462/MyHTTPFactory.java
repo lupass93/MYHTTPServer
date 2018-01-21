@@ -22,7 +22,7 @@ public class MyHTTPFactory implements HTTPFactory {
 	@Override
 	public HTTPServer getHTTPServer(int port, int backlog, InetAddress address, HTTPHandler... handlers) {
 		// TODO Auto-generated method stub
-		return null;
+		return new MyHTTPServerForThread(port, backlog, address, handlers);
 	}
 
 	@Override
