@@ -64,9 +64,8 @@ public class MyHTTPInputStream extends HTTPInputStream {
 	@Override
 	public HTTPReply readHttpReply() throws HTTPProtocolException {
 		// TODO Auto-generated method stub
-		byte[] byteIs;
 		try {
-			byteIs = new byte[is.available()];
+			byte[] byteIs = new byte[is.available()];
 			is.read(byteIs);
 			String stringIs = new String(byteIs);
 			System.out.println(stringIs);

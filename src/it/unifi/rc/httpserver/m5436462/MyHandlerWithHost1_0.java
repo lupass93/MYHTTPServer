@@ -30,22 +30,10 @@ public class MyHandlerWithHost1_0 extends MyHTTPHandler1_0 implements HTTPHandle
 		if (!UtilityForMyProject.equalsIfNotNull(request.getParameters().get("Host:"), " "+this.host)) {
 			return null;
 		} else {
-			Calendar calAct = Calendar.getInstance();
-			SimpleDateFormat actFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
-		   	actFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 			Map<String,String> parameters = new TreeMap<String,String>();
 			parameters.put("Server:", "Lupass Server 0.1");
-			parameters.put("Date:", actFormat.format(calAct.getTime()));
-			if (!request.getVersion().equals(myVersion)) {
-				return null;
-			} else if ((UtilityForMyProject.equalsIfNotNull(request.getMethod(), "GET")) || (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "HEAD"))) {
-				return handleGETorHEAD(request, parameters, actFormat, myVersion);
-			} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "POST")) {
-				return handlePOST(request, parameters, actFormat, myVersion);
-			} else {
-				HTTPReply reply = new MyHTTPReply(myVersion, "400", "Bad Request", null, parameters);
-				return reply;
-			}
+			parameters.put("Date:", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
+			return foundResponsable(request, parameters, myVersion);
 		}
 			
 	}

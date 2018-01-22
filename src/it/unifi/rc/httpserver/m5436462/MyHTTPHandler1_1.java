@@ -6,14 +6,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.TreeMap;
 
-public class MyHTTPHandler1_1 extends MyHTTPHandler1_0 implements HTTPHandler {
+public class MyHTTPHandler1_1 extends MyHTTPHandler implements HTTPHandler {
 
 	private File root;
 	
@@ -23,9 +20,27 @@ public class MyHTTPHandler1_1 extends MyHTTPHandler1_0 implements HTTPHandler {
 		this.root.mkdirs();
 
 	}
+	
+	public HTTPReply foundResponsable(HTTPRequest request, Map<String, String> parameters, String myVersion) {
+		if (!UtilityForMyProject.equalsIfNotNull(request.getVersion(), myVersion) && (!UtilityForMyProject.equalsIfNotNull(request.getVersion(), "HTTP/1.0"))) {
+			HTTPReply reply = new MyHTTPReply(myVersion, "505", "HTTP VERSION NOT SUPPORTED", null, parameters);
+			return reply;
+		} else if ((UtilityForMyProject.equalsIfNotNull(request.getMethod(), "GET")) || (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "HEAD"))) {
+			return handleGETorHEAD(request, parameters, myVersion);
+		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "POST")) {
+			return handlePOST(request, parameters, myVersion);
+		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "PUT")) {
+			return handlePUT(request, parameters, myVersion);
+		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "DELETE")) {
+			return handleDELETE(request, parameters, myVersion);
+		} else {
+			HTTPReply reply = new MyHTTPReply(myVersion, "400", "Bad Request", null, parameters);
+			return reply;
+		}
+	}
 
 
-	protected HTTPReply handlePUT(HTTPRequest request, Map<String, String> parameters, SimpleDateFormat actFormat, String myVersion){
+	protected HTTPReply handlePUT(HTTPRequest request, Map<String, String> parameters, String myVersion){
 		try {
 			if (request.getParameters().get("Content-Range:") != null) {
 				return new MyHTTPReply(myVersion, "400", "Bad Request", null, parameters);
@@ -61,7 +76,7 @@ public class MyHTTPHandler1_1 extends MyHTTPHandler1_0 implements HTTPHandler {
 		
 	}
 
-	protected HTTPReply handleDELETE(HTTPRequest request, Map<String, String> parameters, SimpleDateFormat actFormat, String myVersion){
+	protected HTTPReply handleDELETE(HTTPRequest request, Map<String, String> parameters, String myVersion){
 
 		Path percorso = Paths.get(root.getAbsolutePath(), request.getPath());
 		try {
@@ -82,26 +97,9 @@ public class MyHTTPHandler1_1 extends MyHTTPHandler1_0 implements HTTPHandler {
 	public HTTPReply handle(HTTPRequest request){
 		// TODO Auto-generated method stub
 		final String myVersion="HTTP/1.1";
-		Calendar calAct = Calendar.getInstance();
-		SimpleDateFormat actFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
-		actFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
 		Map<String, String> parameters = new TreeMap<String, String>();
 		parameters.put("Server:", "Lupass Server 0.1");
-		parameters.put("Date:", actFormat.format(calAct.getTime()));
-		if (!UtilityForMyProject.equalsIfNotNull(request.getVersion(), myVersion) && (!UtilityForMyProject.equalsIfNotNull(request.getVersion(), "HTTP/1.0"))) {
-			HTTPReply reply = new MyHTTPReply(myVersion, "505", "HTTP VERSION NOT SUPPORTED", null, parameters);
-			return reply;
-		} else if ((UtilityForMyProject.equalsIfNotNull(request.getMethod(), "GET")) || (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "HEAD"))) {
-			return handleGETorHEAD(request, parameters, actFormat, myVersion);
-		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "POST")) {
-			return handlePOST(request, parameters, actFormat, myVersion);
-		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "PUT")) {
-			return handlePUT(request, parameters, actFormat, myVersion);
-		} else if (UtilityForMyProject.equalsIfNotNull(request.getMethod(), "DELETE")) {
-			return handleDELETE(request, parameters, actFormat, myVersion);
-		} else {
-			HTTPReply reply = new MyHTTPReply(myVersion, "400", "Bad Request", null, parameters);
-			return reply;
-		}
+		parameters.put("Date:", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
+		return foundResponsable(request, parameters, myVersion);
 	}
 }

@@ -22,8 +22,8 @@ public class MainHTTPServerThread {
 		
 		HTTPHandler handler1 = new MyHTTPHandler1_0(root);
 		HTTPHandler handler2 = new MyHTTPHandler1_1(root);
-		HTTPHandler handler3 = new MyHandlerWithHost1_0("prova.org", root);
-		HTTPHandler handler4 = new MyHandlerWithHost1_1("example.org", root);
+		HTTPHandler handler3 = new MyHandlerWithHost1_0("www.esempio.it", root);
+		HTTPHandler handler4 = new MyHandlerWithHost1_1("www.example.org", root);
 		HTTPHandler[] handlers = new HTTPHandler[4];
 		handlers[0] = handler4;
 		handlers[1]= handler3;
