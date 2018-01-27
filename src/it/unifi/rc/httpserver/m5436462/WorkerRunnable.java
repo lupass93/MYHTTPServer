@@ -30,6 +30,10 @@ public class WorkerRunnable implements Runnable {
 
 	}
 	
+	protected synchronized boolean getTimeoutVar() {
+		return this.timeout;
+	}
+	
 	protected synchronized void setTimeoutVariable(boolean value) {
 		this.timeout=value;
 	}
@@ -54,8 +58,6 @@ public class WorkerRunnable implements Runnable {
 		for (int i = 0; i < handlers.size(); i++) {
 			this.reply = this.handlers.get(i).handle(request);
 			if (this.reply != null) {
-				System.out.println("L'handler di indice " + i + " si è occupato delle richiesta: "
-						+ this.handlers.get(i).toString());
 				i = this.handlers.size();
 			}
 		}
@@ -63,7 +65,7 @@ public class WorkerRunnable implements Runnable {
 	}
 	 
 	private void checkTypeOfConnection() {
-		if (!UtilityForMyProject.equalsIfNotNull(this.request.getParameters().get("Connection:"), " Keep-Alive")) {
+		if (!UtilityForMyProject.equalsIfNotNull(this.request.getParameters().get("Connection"), "Keep-Alive")) {
 			close();
 		}
 	}
@@ -74,20 +76,25 @@ public class WorkerRunnable implements Runnable {
 		// TODO Auto-generated method stub
 		try {
 			inizializeConnection();
+			TimeoutHTTP myTimeout = new TimeoutHTTP(this);
+			Thread threadTimeout = new Thread (myTimeout);
+			threadTimeout.start();
 			while (!stop) {
-				TimeoutHTTP thread = null;
-				new Thread ( thread = new TimeoutHTTP(this)).start();;
-				//this.timeout = false;
+				myTimeout.setCheck(false);
 				while (is.available() == 0) {
 					if (timeout) {
 						close();
 						break;
 					}
 				}
-				if (timeout) break;
-				thread.setCheck(false);
+				if (timeout) {
+					break;
+				} else {
+				myTimeout.setCheck(true);
+				threadTimeout.interrupt();
+				threadTimeout.interrupted();
+				}
 				this.request = httpis.readHttpRequest();
-				System.out.println("E' stato letto il messaggio");
 				requestToHandlers();
 				this.httpos.writeHttpReply(reply);
 				checkTypeOfConnection();
@@ -103,9 +110,9 @@ public class WorkerRunnable implements Runnable {
 	
 	public void close() {
 		try {
+			System.out.println("Chiusura Thread e Socket :"+this.toString()+" per il client: "+client.toString());
 			client.close();
 			this.stop=true;
-			System.out.println("Chiusura Thread :"+this.toString());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -14,19 +14,13 @@ public class TestClient1 {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		try {
-			Socket sock = new Socket("192.168.1.3", 1500);
+			Socket sock = new Socket("LUCA_P-PC", 1500);
 			InputStream is = sock.getInputStream();
 			OutputStream os = sock.getOutputStream();
 			HTTPInputStream httpis = new MyHTTPInputStream(is);
 			HTTPOutputStream httpos = new MyHTTPOutputStream(os);
 			System.out.println("C'amm conness");
 			Map<String, String> parameters = new TreeMap<String, String>();
-			/*parameters.put("Host:", "example.org");
-			parameters.put("Connection:", "Keep-Alive");
-			String entityBody = null;
-			HTTPRequest request = new MyHTTPRequest("HTTP/1.0", "GET", "/cartella/pagina.txt", entityBody, parameters);
-			*/
-			
 			int count = 0;
 			boolean connection=true;
 			while (connection) {
@@ -50,7 +44,7 @@ public class TestClient1 {
 						System.out.println("Do you want to add a header line? ");
 						System.out.println("Y if you want to continue; N if not ");
 						if (new BufferedReader(new InputStreamReader(System.in)).readLine().equals("Y")) {
-							System.out.println("INSERISCI NOME HEADER SEGUITO DA :");
+							System.out.println("INSERISCI NOME HEADER");
 							String key = new BufferedReader(new InputStreamReader(System.in)).readLine();
 							System.out.println("INSERISCI VALORE HEADER");
 							String value = new BufferedReader(new InputStreamReader(System.in)).readLine();
@@ -69,19 +63,8 @@ public class TestClient1 {
 			}
 			count = 0;
 			ok = true;
-			HTTPReply reply = httpis.readHttpReply();
-			System.out.println(reply.getVersion() + " " + reply.getStatusCode() + " " + reply.getStatusMessage());
-			if (!reply.getParameters().isEmpty()) {
-				for (Map.Entry<String, String> entry : reply.getParameters().entrySet()) {
-					String key = entry.getKey();
-					System.out.print(key);
-					String value = entry.getValue();
-					System.out.print(value);
-					System.out.println();
-				}
-			}
-			System.out.println(reply.getData());
-			if (UtilityForMyProject.equalsIfNotNull(request.getParameters().get("Connection:"), "Keep-Alive")) {
+			httpis.readHttpReply();
+			if (UtilityForMyProject.equalsIfNotNull(request.getParameters().get("Connection"), "Keep-Alive")) {
 				
 			} else {
 				connection = false;

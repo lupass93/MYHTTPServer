@@ -10,7 +10,7 @@ public class MyHTTPOutputStream extends HTTPOutputStream {
 	
 	public MyHTTPOutputStream( OutputStream os ) {
 		super(os);
-		this.os = os;
+		setOutputStream(os);
 	}
 
 	@Override
@@ -20,13 +20,14 @@ public class MyHTTPOutputStream extends HTTPOutputStream {
 			String msg = reply.getVersion()+" "+reply.getStatusCode()+" "+reply.getStatusMessage()+"\r\n";
 			if (!reply.getParameters().isEmpty()) {
 			for (Map.Entry<String,String> entry : reply.getParameters().entrySet()) {
-				  msg = msg + entry.getKey() + " " + entry.getValue() + "\r\n";
+				  msg = msg + entry.getKey() + ": " + entry.getValue() + "\r\n";
 				}
 			}
 			msg = msg + "\r\n";
 			if(reply.getData()!=null) {
 			msg = msg + reply.getData();
 			}
+			System.out.println(msg);
 			os.write(msg.getBytes());
 			os.flush();
 		} catch (IOException e) {
@@ -43,17 +44,30 @@ public class MyHTTPOutputStream extends HTTPOutputStream {
 			String msg = request.getMethod() + " " + request.getPath() + " " + request.getVersion() + "\r\n";
 			if (!request.getParameters().isEmpty()) {
 				for (Map.Entry<String,String> entry : request.getParameters().entrySet()) {
-					  msg = msg + entry.getKey() + " " + entry.getValue() + "\r\n";
+					  msg = msg + entry.getKey() + ": " + entry.getValue() + "\r\n";
 					}
 				}
 			msg = msg + "\r\n";
 			if (request.getEntityBody()!=null) msg = msg + request.getEntityBody();
+			System.out.println(msg);
 			os.write(msg.getBytes());
 			os.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	protected void setOutputStream(OutputStream os) {
+		// TODO Auto-generated method stub
+		this.os=os;
+	}
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		os.close();
 	}
 
 }

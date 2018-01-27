@@ -1,16 +1,8 @@
 package it.unifi.rc.httpserver.m5436462;
 
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.TreeMap;
 
 public class MyHTTPHandler1_0 extends MyHTTPHandler implements HTTPHandler {
@@ -20,7 +12,7 @@ public class MyHTTPHandler1_0 extends MyHTTPHandler implements HTTPHandler {
 	public MyHTTPHandler1_0(File root) {
 		super(root);
 		this.root = root;
-		root.mkdirs();
+		this.root.mkdirs();
 
 	}
 	public HTTPReply foundResponsable(HTTPRequest request, Map<String, String> parameters, String myVersion) {
@@ -43,8 +35,8 @@ public class MyHTTPHandler1_0 extends MyHTTPHandler implements HTTPHandler {
 		// TODO Auto-generated method stub
 		final String myVersion = "HTTP/1.0";
 		Map<String, String> parameters = new TreeMap<String, String>();
-		parameters.put("Server:", "Lupass Server 0.1");
-		parameters.put("Date:", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
+		parameters.put("Server", "Lupass Server 0.1");
+		parameters.put("Date", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
 		return foundResponsable(request, parameters, myVersion);
 	}
 

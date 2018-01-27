@@ -42,11 +42,11 @@ public class MyHTTPHandler1_1 extends MyHTTPHandler implements HTTPHandler {
 
 	protected HTTPReply handlePUT(HTTPRequest request, Map<String, String> parameters, String myVersion){
 		try {
-			if (request.getParameters().get("Content-Range:") != null) {
+			if (request.getParameters().get("Content-Range") != null) {
 				return new MyHTTPReply(myVersion, "400", "Bad Request", null, parameters);
 			}
-			if (request.getParameters().get("Excepect:") != null) {
-				if (request.getParameters().get("Excepect:").equals(" 100-continue")) {
+			if (request.getParameters().get("Excepect") != null) {
+				if (request.getParameters().get("Excepect").equals("100-continue")) {
 					return new MyHTTPReply(myVersion, "100", "Continue", null, parameters);
 				}
 				return new MyHTTPReply(myVersion, "417", "Expectation Failed", null, parameters);
@@ -98,8 +98,8 @@ public class MyHTTPHandler1_1 extends MyHTTPHandler implements HTTPHandler {
 		// TODO Auto-generated method stub
 		final String myVersion="HTTP/1.1";
 		Map<String, String> parameters = new TreeMap<String, String>();
-		parameters.put("Server:", "Lupass Server 0.1");
-		parameters.put("Date:", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
+		parameters.put("Server", "Lupass Server 0.1");
+		parameters.put("Date", UtilityForMyProject.getDateFormatHTTP().format(Calendar.getInstance().getTime()));
 		return foundResponsable(request, parameters, myVersion);
 	}
 }

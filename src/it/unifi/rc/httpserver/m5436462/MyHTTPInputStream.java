@@ -2,7 +2,6 @@ package it.unifi.rc.httpserver.m5436462;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -37,13 +36,16 @@ public class MyHTTPInputStream extends HTTPInputStream {
 			String method = scanInput.next();
 			String path = scanInput.next();
 			String version = scanInput.next();
-			scanInput.nextLine();
+			if (scanInput.hasNext()) scanInput.nextLine();
 			String temp;
 			Scanner scanLine = null;
 			Map<String,String> parameters = new TreeMap<String,String>();
 			while ((scanInput.hasNextLine()) && ((temp = scanInput.nextLine()).length() > 0)) {
 				scanLine = new Scanner(temp);
+				scanLine.useDelimiter("\\:s*");
 				temp = scanLine.next();
+				scanLine.useDelimiter("\\p{Alnum}");
+				scanLine.next();
 				parameters.put(temp, scanLine.nextLine());
 			}
 			if (scanLine != null) scanLine.close();
@@ -73,12 +75,16 @@ public class MyHTTPInputStream extends HTTPInputStream {
 			Map<String, String> parameters = new TreeMap<String, String>();
 			String version = scanInput.next();
 			String statusCode = scanInput.next();
-			String statusMessage = scanInput.nextLine();
+			String statusMessage = scanInput.next();
+			if (scanInput.hasNextLine()) scanInput.nextLine();
 			String temp;
 			Scanner scanLine = null;
 			while ((scanInput.hasNextLine()) && ((temp = scanInput.nextLine()).length() > 0)) {
 				scanLine = new Scanner(temp);
+				scanLine.useDelimiter("\\:s*");
 				temp = scanLine.next();
+				scanLine.useDelimiter("\\p{Alnum}");
+				scanLine.next();
 				parameters.put(temp, scanLine.nextLine());
 			}
 			scanLine.close();

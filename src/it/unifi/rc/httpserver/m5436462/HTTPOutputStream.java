@@ -14,8 +14,6 @@ import java.io.OutputStream;
  */
 public abstract class HTTPOutputStream {
 
-	private OutputStream os;
-
 	/**
 	 * Creates an instance of {@link HTTPOutputStream} that uses the {@link OutputStream} passed
 	 * as parameter.
@@ -23,9 +21,16 @@ public abstract class HTTPOutputStream {
 	 * @param os an {@link OutputStream} that is used to write data.
 	 */
 	public HTTPOutputStream( OutputStream os ) {
-		this.os = os;
+		this.setOutputStream( os );
 	}
 	
+	/**
+	 * Set internal data structures to refer to a given OutputStream.
+	 * 
+	 * @param is <code>OutputStream</code> used to retrieves data.
+	 */
+	protected abstract void setOutputStream(OutputStream os);
+
 	/**
 	 * Writes a reply into the inner {@link OutputStream}.
 	 * 
@@ -45,8 +50,6 @@ public abstract class HTTPOutputStream {
 	 * 
 	 * @throws IOException if an error occurs.
 	 */
-	public void close() throws IOException {
-		this.os.close();
-	}
+	public abstract void close() throws IOException;
 	
 }

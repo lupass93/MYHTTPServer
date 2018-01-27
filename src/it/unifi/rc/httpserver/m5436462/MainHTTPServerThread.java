@@ -30,6 +30,7 @@ public class MainHTTPServerThread {
 		handlers[2] = handler1;
 		handlers[3] = handler2;
 		System.out.println(address.getHostAddress());
+		System.out.println(address.getHostName());
 		HTTPServer myServer = new MyHTTPServerForThread(port, backlog, address, handlers);
 		myServer.start();
 	}
