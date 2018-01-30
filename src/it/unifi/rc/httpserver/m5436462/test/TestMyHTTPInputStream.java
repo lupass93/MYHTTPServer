@@ -30,7 +30,7 @@ public class TestMyHTTPInputStream {
 		Map<String,String> parameters = new TreeMap<String, String>();
 		parameters.put("Connection", "Keep-Alive");
 		parameters.put("If-Modified-Since", "Mon, 22 Jan 2018 14:08:54 GMT");
-		String entityBody = null;
+		String entityBody = "";
 		HTTPRequest requestExpected = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		HTTPRequest request = httpis.readHttpRequest();
 		assertEquals(requestExpected.getVersion(), request.getVersion());

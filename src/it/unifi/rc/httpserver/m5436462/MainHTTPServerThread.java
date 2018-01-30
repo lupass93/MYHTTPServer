@@ -6,7 +6,12 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class MainHTTPServerThread {
-
+	/**
+	 * Questa classe rappresenta il main per mandare in esecuzione il Server HTTP
+	 * 
+	 * @param args
+	 * @throws IOException
+	 */
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		int port = 1500;
@@ -18,7 +23,7 @@ public class MainHTTPServerThread {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		File root = new File("C:\\SERVERDIR2\\");
+		File root = new File("C:\\CARTELLASERVER\\");
 		
 		HTTPHandler handler1 = new MyHTTPHandler1_0(root);
 		HTTPHandler handler2 = new MyHTTPHandler1_1(root);

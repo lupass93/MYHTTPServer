@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.junit.Test;
 
@@ -24,7 +25,7 @@ public class TestMyHTTPHandler1_1 {
 		String method = "GET";
 		String path = "/fileInesistente.html";
 		String entityBody = null;
-		Map<String, String> parameters = null;
+		Map<String, String> parameters = new TreeMap<String,String>();
 		HTTPRequest request = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		File root = new File("C:\\CartellaPerTest\\");
 		HTTPHandler forTest = new MyHTTPHandler1_1(root);
@@ -33,7 +34,7 @@ public class TestMyHTTPHandler1_1 {
 		String replyStatusCode = "404";
 		String replyStatusMessage = "Not Found";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -57,7 +58,7 @@ public class TestMyHTTPHandler1_1 {
 		String method = "HEAD";
 		String path = "/fileesistente.html";
 		String entityBody = null;
-		Map<String, String> parameters = null;
+		Map<String, String> parameters = new TreeMap<String,String>();
 		HTTPRequest request = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		File root = new File("C:\\CartellaPerTest\\");
 		HTTPHandler forTest = new MyHTTPHandler1_1(root);
@@ -66,7 +67,7 @@ public class TestMyHTTPHandler1_1 {
 		String replyStatusCode = "200";
 		String replyStatusMessage = "OK";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String, String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -89,7 +90,7 @@ public class TestMyHTTPHandler1_1 {
 		String method = "POST";
 		String path = "/fileesistente.html";
 		String entityBody = "AGGIUNTA AL FILE DI UNA RIGA TRAMITE METODO POST\r\n";
-		Map<String, String> parameters = null;
+		Map<String, String> parameters = new TreeMap<String,String>();
 		HTTPRequest request = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		File root = new File("C:\\CartellaPerTest\\");
 		HTTPHandler forTest = new MyHTTPHandler1_1(root);
@@ -98,7 +99,7 @@ public class TestMyHTTPHandler1_1 {
 		String replyStatusCode = "200";
 		String replyStatusMessage = "OK";
 		String data = new String(Files.readAllBytes(toFile.toPath()));
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -111,7 +112,7 @@ public class TestMyHTTPHandler1_1 {
 		String method = "DELETE";
 		String path = "/fileInesistente.html";
 		String entityBody = null;
-		Map<String, String> parameters = null;
+		Map<String, String> parameters = new TreeMap<String,String>();
 		HTTPRequest request = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		File root = new File("C:\\CartellaPerTest\\");
 		HTTPHandler forTest = new MyHTTPHandler1_1(root);
@@ -120,7 +121,7 @@ public class TestMyHTTPHandler1_1 {
 		String replyStatusCode = "404";
 		String replyStatusMessage = "Not Found";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String, String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -133,7 +134,7 @@ public class TestMyHTTPHandler1_1 {
 		String method = "PUT";
 		String path = "/NuovoFile.html";
 		String entityBody = null;
-		Map<String, String> parameters = null;
+		Map<String, String> parameters = new TreeMap<String,String>();
 		HTTPRequest request = new MyHTTPRequest(version, method, path, entityBody, parameters);
 		File root = new File("C:\\CartellaPerTest\\");
 		File toFile = new File("C:\\CartellaPerTest\\NuovoFile.html");
@@ -145,7 +146,7 @@ public class TestMyHTTPHandler1_1 {
 		String replyStatusCode = "204";
 		String replyStatusMessage = "No Content";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());

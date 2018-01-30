@@ -37,7 +37,7 @@ public class TestMyHandlerWithHost1_1 {
 		String replyStatusCode = "404";
 		String replyStatusMessage = "Not Found";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -72,7 +72,7 @@ public class TestMyHandlerWithHost1_1 {
 		String replyStatusCode = "200";
 		String replyStatusMessage = "OK";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -106,7 +106,7 @@ public class TestMyHandlerWithHost1_1 {
 		String replyStatusCode = "200";
 		String replyStatusMessage = "OK";
 		String data = new String(Files.readAllBytes(toFile.toPath()));
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -130,7 +130,7 @@ public class TestMyHandlerWithHost1_1 {
 		String replyStatusCode = "404";
 		String replyStatusMessage = "Not Found";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
@@ -157,7 +157,7 @@ public class TestMyHandlerWithHost1_1 {
 		String replyStatusCode = "204";
 		String replyStatusMessage = "No Content";
 		String data = null;
-		Map<String, String> replyParameters = null;
+		Map<String, String> replyParameters = new TreeMap<String,String>();
 		HTTPReply replyExpected = new MyHTTPReply(replyVersion, replyStatusCode, replyStatusMessage, data, replyParameters);
 		assertEquals(replyExpected.getVersion(), reply.getVersion());
 		assertEquals(replyExpected.getStatusCode(), reply.getStatusCode());
